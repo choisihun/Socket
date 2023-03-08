@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		85491BEC29B1C0CA0088D18F /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = 85491BEB29B1C0CA0088D18F /* SwiftStomp */; };
+		85297D5029B8ABEF001ACE8F /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = 85297D4F29B8ABEF001ACE8F /* SwiftStomp */; };
 		85813C8529B062C500D84737 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85813C8429B062C500D84737 /* API.swift */; };
 		85813C8B29B0635300D84737 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 85813C8A29B0635300D84737 /* Alamofire */; };
 		85813C8E29B0636100D84737 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 85813C8D29B0636100D84737 /* SnapKit */; };
@@ -69,7 +69,7 @@
 				85813C9129B0637500D84737 /* Then in Frameworks */,
 				85813C8B29B0635300D84737 /* Alamofire in Frameworks */,
 				85813C8E29B0636100D84737 /* SnapKit in Frameworks */,
-				85491BEC29B1C0CA0088D18F /* SwiftStomp in Frameworks */,
+				85297D5029B8ABEF001ACE8F /* SwiftStomp in Frameworks */,
 				85813C9429B063A000D84737 /* MessageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,7 +152,7 @@
 				85813C8D29B0636100D84737 /* SnapKit */,
 				85813C9029B0637500D84737 /* Then */,
 				85813C9329B063A000D84737 /* MessageKit */,
-				85491BEB29B1C0CA0088D18F /* SwiftStomp */,
+				85297D4F29B8ABEF001ACE8F /* SwiftStomp */,
 			);
 			productName = Socket;
 			productReference = 85FF8FFA29B0616000BD5027 /* Socket.app */;
@@ -187,7 +187,7 @@
 				85813C8C29B0636100D84737 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				85813C8F29B0637500D84737 /* XCRemoteSwiftPackageReference "Then" */,
 				85813C9229B063A000D84737 /* XCRemoteSwiftPackageReference "MessageKit" */,
-				85491BEA29B1C0CA0088D18F /* XCRemoteSwiftPackageReference "SwiftStomp" */,
+				85297D4E29B8ABEF001ACE8F /* XCRemoteSwiftPackageReference "SwiftStomp" */,
 			);
 			productRefGroup = 85FF8FFB29B0616000BD5027 /* Products */;
 			projectDirPath = "";
@@ -443,12 +443,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		85491BEA29B1C0CA0088D18F /* XCRemoteSwiftPackageReference "SwiftStomp" */ = {
+		85297D4E29B8ABEF001ACE8F /* XCRemoteSwiftPackageReference "SwiftStomp" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Romixery/SwiftStomp";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.4;
 			};
 		};
 		85813C8929B0635300D84737 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -486,9 +486,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		85491BEB29B1C0CA0088D18F /* SwiftStomp */ = {
+		85297D4F29B8ABEF001ACE8F /* SwiftStomp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 85491BEA29B1C0CA0088D18F /* XCRemoteSwiftPackageReference "SwiftStomp" */;
+			package = 85297D4E29B8ABEF001ACE8F /* XCRemoteSwiftPackageReference "SwiftStomp" */;
 			productName = SwiftStomp;
 		};
 		85813C8A29B0635300D84737 /* Alamofire */ = {

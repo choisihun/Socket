@@ -16,8 +16,7 @@ import SwiftStomp
 class MessageVC: MessagesViewController {
     
     let swiftStomp: SwiftStomp
-    
-    let url = URL(string: "ws://localhost:8080/myApp/stompEndpoint")!
+    let url = URL(string: "ws://10.80.163.36:8080/ws")!
     
     var stack: Channel
     var sender = Sender(senderId: "asdfasdfdddd", displayName: "sihun")
@@ -34,16 +33,16 @@ class MessageVC: MessagesViewController {
     }
     
     init(Stack: Channel) {
-       self.stack = Stack
+        self.stack = Stack
         self.swiftStomp = SwiftStomp(host: url)
         super.init(nibName: nil, bundle: nil)
-   }
+    }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-//     MARK: - viewDidLoad
+    //     MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegates()
@@ -51,6 +50,7 @@ class MessageVC: MessagesViewController {
         setupMessageInputBar()
         removeOutgoingMessageAvatars()
         connectStomp()
+        stomp()
     }
     
     deinit {
@@ -154,6 +154,31 @@ extension MessageVC: InputBarAccessoryViewDelegate {
 extension MessageVC: SwiftStompDelegate {
     func onConnect(swiftStomp: SwiftStomp, connectType: StompConnectType) {
         print("onConncet")
+        swiftStomp.subscribe(to: "/sub/chat/user/tank6210@gmail.com", mode: .auto)
+//        do {
+//            let bodyData: [String:String] = [
+//                "type":"ENTER",
+//                "roomId":"747ba655-b3ae-4d66-9877-0c62aed31925",
+//                "sender":"뭘 봐 이 개복치같은 친구야",
+//                "message":""
+//            ]
+//
+//            let jsonData = try JSONSerialization.data(withJSONObject: bodyData, options: .prettyPrinted)
+//
+//            let stringData = String(data: jsonData, encoding: .utf8)!
+//
+//            let headers = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJja3NndXIwNjEyQGRnc3cuaHMua3IiLCJhdXRoIjoiUk9MRV9HVUVTVCIsImV4cCI6MTY3ODQwODIxMH0.XZwb_faBLmqD5iMhD2tatxEyo-MrPOomTyKnL3twR7A"]
+//
+//            let receiptId: String = "cksgur0612@dgsw.hs.kr"
+//
+//            swiftStomp.send(body: stringData, to: "/pub/chat/send/", receiptId: receiptId, headers: headers)
+//            print("⭐️")
+//        }
+//
+//        catch {
+//            print("😡")
+//        }
+        
     }
     func onDisconnect(swiftStomp: SwiftStomp, disconnectType: StompDisconnectType) {
         print("onDisconnect")
@@ -162,62 +187,83 @@ extension MessageVC: SwiftStompDelegate {
         print("onMessageReceived")
     }
     func onError(swiftStomp: SwiftStomp, briefDescription: String, fullDescription: String?, receiptId: String?, type: StompErrorType) {
-        print("onMessageReceived")
+        print("onError")
     }
     func onReceipt(swiftStomp: SwiftStomp, receiptId: String) {
         print("onReceipt")
-    }
-    func onError(swiftStomp: SwiftStomp, briefDescription: String, fullDescription: String?, receiptId: String?, type: SwiftStomp) {
-        print("onError")
     }
     func onSocketEvent(eventName: String, description: String) {
         print("onSocketEvent")
     }
     
-    func connectStomp() {ç
-        swiftStomp.delegate = self //< Set delegate
-        swiftStomp.autoReconnect = true //< Auto reconnect on error or cancel
-        swiftStomp.connect() //< Connect
+    func connectStomp() {
+        swiftStomp.autoReconnect = true
+        swiftStomp.connect() //Connect
+        func stompMessage() {
+            switch self.swiftStomp.connectionStatus {
+            case .connecting:
+                print("Connecting to the server")
+            case .socketConnected:
+                print("socketConnected")
+            case .fullyConnected:
+                print("Both socket and STOMP is connected. Ready for messaging")
+            case .socketDisconnected:
+                print("Socket is disconnected")
+            }
+        }
+    }
+        func stomp() {
+            do {
+                let bodyData: [String:String] = [
+                    "type":"ENTER",
+                    "roomId":"747ba655-b3ae-4d66-9877-0c62aed31925",
+                    "sender":"뭘 봐 이 개복치같은 친구야",
+                    "message":""
+                ]
+                
+                let jsonData = try JSONSerialization.data(withJSONObject: bodyData, options: .prettyPrinted)
+                
+                let stringData = String(data: jsonData, encoding: .utf8)!
+                
+                let headers = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJja3NndXIwNjEyQGRnc3cuaHMua3IiLCJhdXRoIjoiUk9MRV9HVUVTVCIsImV4cCI6MTY3ODM2MzQ2M30.klW88yH9Aba9BoTX-fc9n-9Ikb6vRk88HPL8gW5ONlg"]
+                
+                let receiptId: String = "cksgur0612@dgsw.hs.kr"
+                
+                swiftStomp.send(body: stringData, to: "/pub/chat/send/", receiptId: receiptId, headers: headers)
+                print("✨")
+            }
+            
+            catch {
+                print("😡")
+            }
+        }
+        
+        
+        
+        func sendData(_ inputBar: InputBarAccessoryView) {
+            do {
+                let bodyData: [String:String] = [
+                    "type":"TALK",
+                    "roomId":"747ba655-b3ae-4d66-9877-0c62aed31925",
+                    "sender":"뭘 봐 이 개복치같은 친구야",
+                    "message":inputBar.inputTextView.text!
+                ]
+                
+                let jsonData = try JSONSerialization.data(withJSONObject: bodyData, options: .prettyPrinted)
+                
+                let stringData = String(data: jsonData, encoding: .utf8)!
+                
+                let headers = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJja3NndXIwNjEyQGRnc3cuaHMua3IiLCJhdXRoIjoiUk9MRV9HVUVTVCIsImV4cCI6MTY3ODM2MzQ2M30.klW88yH9Aba9BoTX-fc9n-9Ikb6vRk88HPL8gW5ONlg"]
+                
+                let receiptId: String = "cksgur0612@dgsw.hs.kr"
+                
+                swiftStomp.send(body: stringData, to: "/pub/chat/user/", receiptId: receiptId, headers: headers)
+                print("😁")
+            }
+            catch {
+                print("😡")
+            }
+        }
         
     }
-    
-    func stompMessage() {
-        switch self.swiftStomp.connectionStatus {
-        case .connecting:
-            print("Connecting to the server")
-        case .socketConnected:
-            print("socketConnected")
-        case .fullyConnected:
-            print("Both socket and STOMP is connected. Ready for messaging")
-        case .socketDisconnected:
-            print("Socket is disconnected")
-        }
-    }
-    
-    func sendData(_ inputBar: InputBarAccessoryView) {
-        do {
-            let bodyData: [String:String] = [
-                "type":"ENTER",
-                "roomId":"34ce07dd-7c66-4d5c-ae77-2544fb35c875",
-                "sender":"뭘 봐 이 개복치같은 친구야",
-                "message":inputBar.inputTextView.text!
-            ]
-            
-            let jsonData = try JSONSerialization.data(withJSONObject: bodyData, options: .prettyPrinted)
-            
-            let stringData = String(data: jsonData, encoding: .utf8)!
-            
-            let headers = [
-                "destination": "토큰"
-            ]
-            let receiptId = ["tank6210@gmail.com"]
-            swiftStomp.subscribe(to: "sub/chat/user/tank6210@gmail.com", mode: .auto)
-            swiftStomp.send(body: bodyData, to: "sub/chat/user/", receiptId: "receiptId", headers: headers)
-        }
-        catch {
-            print("asdf")
-        }
-    }
-}
-
 

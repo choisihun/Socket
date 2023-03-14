@@ -175,6 +175,7 @@ extension MessageVC: StompClientLibDelegate {
                     if let messageText = jsonDict["message"] as? String {
                         let message = Message(content: messageText)
                         insertNewMessage(message)
+                        print("섹스")
                     }
                 }
             } catch {
